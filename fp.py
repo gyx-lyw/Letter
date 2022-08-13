@@ -91,10 +91,10 @@ for epoch in range(50):
             lr = learning_rate * math.e ** (-(epoch * len(train_loader) + i) * k)
 
             for j in range(0, len(grad)):
-                grad[j] += v_params[j] * lr * jvp
+                grad[j] += v_params[j] * jvp
     with torch.no_grad():
         for p in range(0, len(grad)):
-            params[p].sub_(grad[p] / direction_num)
+            params[p].sub_(lr * grad[p] / direction_num)
 
     print(f"第{epoch + 1}次训练， Loss: {loss.item():.4f}")
     file.writelines(f'iter:{it},Loss:{loss.item():.4f}\n')
